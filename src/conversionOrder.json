@@ -1,0 +1,7 @@
+{
+    "ifctoowl": ["IFCtoOWL"],
+    "ifctolbd": ["IFCtoLBD"],
+    "ifctodae": ["IFCtoDAE"],
+    "ifctogltf": ["IFCtoDAE", "IFCtoGLTF"],
+    "ifctoxml": ["IFCtoXML"]
+}
