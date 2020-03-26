@@ -19,7 +19,6 @@ exports.saveToFile = async (req, res, next) => {
 }
 
 exports.convertTo = async (req, res, next) => {
-    console.log(req.baseUri)
     let conversionType = req.originalUrl.substring(1)
     conversionType = conversionType.toLowerCase()
     let modes = conversionOrder[conversionType]

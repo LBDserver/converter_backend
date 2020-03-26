@@ -13,9 +13,11 @@ const certificate = fs.readFileSync(process.cwd() + '/config/mkcert-cert.crt', '
 const credentials = {key: privateKey, cert: certificate}
 
 const app = express()
-const port = process.env.PORT
 app.use(bodyParser.json())
 
+app.get('/test', (req, res) => {
+    return res.send('it works!')
+})
 app.post('/IFCtoOWL', saveToFile, convertTo)
 app.post('/IFCtoLBD', saveToFile, convertTo)
 app.post('/IFCtoDAE', saveToFile, convertTo)
