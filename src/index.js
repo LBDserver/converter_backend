@@ -2,6 +2,8 @@ const express = require('express')
 // const https = require('https')
 const fs = require('fs')
 const bodyParser = require('body-parser')
+const compression = require('compression')
+const helmet = require('helmet')
 
 const {
     saveToFile,
@@ -14,6 +16,8 @@ const {
 
 const app = express()
 app.use(bodyParser.json())
+app.use(compression())
+app.use(helmet())
 
 app.get('/test', (req, res) => {
     return res.send('it works!')
