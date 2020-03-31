@@ -4,9 +4,24 @@ const fs = require('fs')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const helmet = require('helmet')
+const multer = require('multer')
+const path = require('path')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, next) {
+        next(null, 'base-files');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.ifc');
+    }
+})
+
+const upload = multer({
+    storage: storage
+});
+
 
 const {
-    saveToFile,
     convertTo
 } = require('./convertor')
 
@@ -16,17 +31,16 @@ const {
 
 const app = express()
 app.use(bodyParser.json())
-app.use(compression())
-app.use(helmet())
+// app.use(compression())
+// app.use(helmet())
 
 app.get('/test', (req, res) => {
     return res.send('it works!')
 })
-app.post('/IFCtoOWL', saveToFile, convertTo)
-app.post('/IFCtoLBD', saveToFile, convertTo)
-app.post('/IFCtoDAE', saveToFile, convertTo)
-app.post('/IFCtoGLTF', saveToFile, convertTo)
-app.post('/IFCtoXML', saveToFile, convertTo)
+app.post('/IFCtoOWL', upload.single('ifcFile'), convertTo)
+app.post('/IFCtoLBD', upload.single('ifcFile'), convertTo)
+app.post('/IFCtoDAE', upload.single('ifcFile'), convertTo)
+app.post('/IFCtoGLTF', upload.single('ifcFile'), convertTo)
 
 // const httpsServer = https.createServer(credentials, app)
 
@@ -35,5 +49,5 @@ app.post('/IFCtoXML', saveToFile, convertTo)
 // })
 
 app.listen(4800, () => {
-    console.log('HTTP server is up on port '+ 4800)
+    console.log('HTTP server is up on port ' + 4800)
 })
