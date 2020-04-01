@@ -41,19 +41,19 @@ const zip = require('express-zip')
 // }
 
 convert = async (file, conversionType, baseUri) => {
-    return new Promise (async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const modes = conversionOrder[conversionType.toLowerCase()]
         let order = []
-    
+
         modes.forEach((mode) => {
             const { command, fileExtension } = switcher(mode, baseUri, file)
             order.push({ command, mode, fileExtension })
         })
-    
+
         let IfcPlaceholder = `${process.cwd()}/${file}`
         let createdFiles = [IfcPlaceholder]
-    
-    
+
+
         try {
             for (const conversion of order) {
                 console.log('converting to', conversion.mode.substring(5))
@@ -65,7 +65,7 @@ convert = async (file, conversionType, baseUri) => {
         } catch (error) {
             reject(error)
         }
-    
+
         resolve(createdFiles)
     })
 }
@@ -98,7 +98,16 @@ exports.convertMultiple = async (req, res, next) => {
                 }
             })
         })
-        res.zip(final)
+
+        res.zip(final, () => {
+            included.forEach(file => {
+                try {
+                    deleteFile(file)
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        })
     } catch (error) {
         // console.log('error', error)
         next(error)

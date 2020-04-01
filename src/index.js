@@ -22,7 +22,6 @@ const upload = multer({
 
 
 const {
-    convertTo,
     convertMultiple
 } = require('./convertor')
 
@@ -32,8 +31,8 @@ const {
 
 const app = express()
 app.use(bodyParser.json())
-// app.use(compression())
-// app.use(helmet())
+app.use(compression())
+app.use(helmet())
 
 app.get('/test', (req, res) => {
     return res.send('it works!')
