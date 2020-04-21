@@ -9,11 +9,13 @@ exports.extractFormData = async (req) => {
         let documentData = {}
 
         busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+            console.log("getting file")
             let buff = ''
             file.on('data', (data) => {
                 buff += data
             });
             file.on('end', () => {
+                console.log({buff})
                 documentData[fieldname] = buff
             })
         });

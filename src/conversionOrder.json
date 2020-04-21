@@ -1,7 +1,7 @@
 {
-    "ifctoowl": ["IFCtoOWL"],
-    "ifctolbd": ["IFCtoLBD"],
-    "ifctodae": ["IFCtoDAE"],
-    "ifctogltf": ["IFCtoDAE", "IFCtoGLTF"],
-    "ifctoxml": ["IFCtoXML"]
+    "ifcowl": ["IFCtoOWL"],
+    "lbd": ["IFCtoLBD"],
+    "dae": ["IFCtoDAE"],
+    "gltf": ["IFCtoDAE", "IFCtoGLTF"],
+    "xml": ["IFCtoXML"]
 }

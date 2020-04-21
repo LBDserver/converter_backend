@@ -27,3 +27,5 @@ yarn-error.log*
 *.crt
 *.key
 
+mylogs.log*
+mylogs.log.1*
