@@ -55,5 +55,6 @@ app.post('/convert', upload.single('ifcFile'), convertMultiple)
 // })
 
 app.listen(4800, () => {
+    console.log('process.platform', process.platform)
     console.log('HTTP server is up on port ' + 4800)
 })

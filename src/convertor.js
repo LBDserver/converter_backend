@@ -21,6 +21,7 @@ convert = async (file, conversionType, baseUri) => {
         try {
             for (const conversion of order) {
                 console.log('converting to', conversion.mode.substring(5))
+                console.log('conversion', conversion)
                 const perform = await executeChildProcess(conversion.command)
                 console.log(conversion.mode.substring(5), 'done')
                 const placeholder = `${process.cwd()}/${file}.${conversion.fileExtension}`
@@ -97,11 +98,19 @@ const switcher = (originalUrl, baseUri, base) => {
             fileExtension = 'lbd.ttl'
             break;
         case 'IFCtoDAE':
-            command = `${process.cwd()}/cli/IfcConvert ${process.cwd()}/${base} --use-element-guids ${process.cwd()}/${base}.dae`
+            if (process.platform === "linux") {
+                command = `${process.cwd()}/cli/IfcConvert ${process.cwd()}/${base} --use-element-guids ${process.cwd()}/${base}.dae`
+            } else if (process.platform === "win32") {
+                command = `${process.cwd()}/cli/IfcConvert.exe ${process.cwd()}/${base} --use-element-guids ${process.cwd()}/${base}.dae`
+            }
             fileExtension = 'dae'
             break;
         case 'IFCtoGLTF':
-            command = `${process.cwd()}/cli//COLLADA2GLTF_linux/COLLADA2GLTF-bin ${process.cwd()}/${base}.dae ${process.cwd()}/${base}.gltf`
+            if (process.platform === "linux") {
+                command = `${process.cwd()}/cli//COLLADA2GLTF/COLLADA2GLTF-bin ${process.cwd()}/${base}.dae ${process.cwd()}/${base}.gltf`
+            } else if (process.platform === "win32") {
+                command = `${process.cwd()}/cli//COLLADA2GLTF/COLLADA2GLTF-bin.exe ${process.cwd()}/${base}.dae ${process.cwd()}/${base}.gltf`
+            }
             fileExtension = 'gltf'
             break;
         default:
