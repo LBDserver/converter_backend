@@ -42,7 +42,7 @@ Host: localhost:4800
 Content-Type: multipart/form-data
 Body: {
   ifcFile: <fileUpload>
-  conversions: LBD, ifcOWL, DAE, GLTF
+  conversions: "LBD, ifcOWL, DAE, GLTF"
 }
 ```
 
@@ -54,8 +54,6 @@ You can specify LBD, ifcOWL, DAE, or GLTF as values for the conversion process. 
 HTTP/1.1 200 OK
 Content-Type: application/zip
 Content-Disposition: attachment; filename="attachment.zip"
-
-{ ZIP-file content }
 ```
 
 ## Extend the app
