@@ -2,7 +2,8 @@ const { extractFormData, executeChildProcess, deleteFile } = require('./helper')
 const fs = require('fs')
 const conversionOrder = require('./conversionOrder.json')
 const zip = require('express-zip')
-
+var FormData = require('form-data');
+const { format } = require('url');
 
 convert = async (file, conversionType, baseUri) => {
     return new Promise(async (resolve, reject) => {
@@ -35,6 +36,52 @@ convert = async (file, conversionType, baseUri) => {
     })
 }
 
+exports.convertOne = async (req, res, next) => {
+    const filepath = req.file.path
+    const baseUri = req.body.base
+    const type = req.originalUrl.substring(1)
+    let result = await convert(filepath, type, baseUri)
+
+    const resultLocation = result[result.length - 1]
+    fs.readFile(resultLocation, (err, data) => {
+        if (err) {
+          throw err;
+        }
+        // const form = new FormData();
+        // form.append('file', data);
+        res.status(200).send(data)
+        result.forEach(f => deleteFile(f))
+        
+      });
+
+
+
+    // try {
+    //     let parts = await convert(filepath, conversion, baseUri)
+    //     console.log('parts', parts)
+    //     let included = []
+    //     let final = []
+    //     parts.forEach(p => {
+    //         p.forEach(c => {
+    //             if (!included.includes(c)) {
+    //                 let name = c.split('/')[c.split('/').length - 1]
+    //                 final.push({ path: c, name })
+    //                 included.push(c)
+    //             }
+    //         })
+    //     })
+
+    //     res.zip(final, () => {
+    //         included.forEach(file => {
+    //             deleteFile(file)
+    //         })
+    //     })
+    // } catch (error) {
+    //     // console.log('error', error)
+    //     next(error)
+    // }
+}
+
 exports.convertMultiple = async (req, res, next) => {
     const filepath = req.file.path
     let splitconversions, conversions
@@ -63,6 +110,7 @@ exports.convertMultiple = async (req, res, next) => {
 
     try {
         let parts = await Promise.all(conversions.map(type => convert(filepath, type, baseUri)))
+        console.log('parts', parts)
         let included = []
         let final = []
         parts.forEach(p => {

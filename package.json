@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
+    "dev": "nodemon src/index.js",
     "dev2": "env-cmd -f ./config/dev.env src/index.js"
   },
   "author": "",
@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-zip": "^3.0.0",
+    "form-data": "^3.0.0",
     "helmet": "^3.22.0",
     "jszip": "^3.3.0",
     "lodash": "^4.17.20",

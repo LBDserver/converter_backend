@@ -23,7 +23,8 @@ const upload = multer({
 
 
 const {
-    convertMultiple
+    convertMultiple,
+    convertOne
 } = require('./convertor')
 
 // const privateKey = fs.readFileSync(process.cwd() + '/config/mkcert-key.key', 'utf8')
@@ -39,10 +40,10 @@ app.use(cors())
 app.get('/test', (req, res) => {
     return res.send('it works!')
 })
-// app.post('/IFCtoOWL', upload.single('ifcFile'), convertTo)
-// app.post('/IFCtoLBD', upload.single('ifcFile'), convertTo)
-// app.post('/IFCtoDAE', upload.single('ifcFile'), convertTo)
-// app.post('/IFCtoGLTF', upload.single('ifcFile'), convertTo)
+app.post('/ifcowl', upload.single('ifcFile'), convertOne)
+app.post('/lbd', upload.single('ifcFile'), convertOne)
+app.post('/dae', upload.single('ifcFile'), convertOne)
+app.post('/gltf', upload.single('ifcFile'), convertOne)
 
 app.post('/convert', upload.single('ifcFile'), convertMultiple)
 
