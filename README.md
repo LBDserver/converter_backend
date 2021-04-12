@@ -56,6 +56,9 @@ Content-Type: application/zip
 Content-Disposition: attachment; filename="attachment.zip"
 ```
 
+## Known issues
+- The file path where the convertor is running should not contain spaces (e.g. this issue occurs in "Onedrive - myCompany" subfolders)
+
 ## Extend the app
 If you care to extend the application so it can also output other formats: this is easily possible with a small number of code edits as long as you have an executable available of the conversion process.
 
