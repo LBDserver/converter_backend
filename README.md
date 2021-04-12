@@ -58,6 +58,7 @@ Content-Disposition: attachment; filename="attachment.zip"
 
 ## Known issues
 - The file path where the convertor is running should not contain spaces (e.g. this issue occurs in "Onedrive - myCompany" subfolders)
+- for larger files, some subprocesses (Java) may require to increase the allocated heap space (e.g. -Xms32G -Xmx32G -jar IFCtoLBD_Desktop_Java8.jar)
 
 ## Extend the app
 If you care to extend the application so it can also output other formats: this is easily possible with a small number of code edits as long as you have an executable available of the conversion process.
